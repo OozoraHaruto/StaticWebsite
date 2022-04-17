@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#87ceeb">
+    <title>文字コード</title>
+    <link href="../css/plain.css" rel="stylesheet">
+    <script src="../script/pages.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <!-- <script src="ecl_array.js-master/encoding.js"></script>
+    <script src="ecl_array.js-master/ecl.js"></script> -->
+    <script type="text/javascript" src="ecl_array.js-master/utils.js"></script>
+    <script type="text/javascript" src="ecl_array.js-master/utils_crc32.js"></script>
+    <!-- Character Encoding -->
+    <script type="text/javascript" src="ecl_array.js-master/encoding.js"></script>
+    <script type="text/javascript" src="ecl_array.js-master/ecl.js"></script>
+    <script type="text/javascript" src="ecl_array.js-master/ecl_array.js"></script>
+
+    <script type="text/javascript" src="ecl_array.js-master/inflate.min.js"></script>
+    <script type="text/javascript" src="ecl_array.js-master/ecl_2004.js"></script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+    // delete Text(En|De)coder if exists
+    if (typeof TextEncoder !== 'undefined') {delete TextEncoder;}
+    if (typeof TextDecoder !== 'undefined') {delete TextDecoder;}
+    //]]>
+    </script>
+    <script type="text/javascript" src="ecl_array.js-master/text-encoding/lib/encoding-indexes.js"></script>
+    <script type="text/javascript" src="ecl_array.js-master/text-encoding/lib/encoding.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #87ceeb;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">太陽のウエブ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul id="navbar-links" class="navbar-nav"></ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container p-3">
+      <div class="row">
+        <div class="col">
+          <div class="fs-1 my-3 text-center">文字コード</div>
+        </div>
+      </div>
+      <script>
+        var str = "。あ";
+        // 文字列を16bit数値の列に変換
+        var array = ECL.charset.Unicode.parse(str);   //=> [12354, 12356, 12358, 12360, 12362]
+        console.log(array)
+        let utf8 = ECL.convert_array(array, "UTF8")
+        console.log(utf8)
+        let sjis_array = Encoding.convert(utf8, "SJIS", "UTF8")
+        console.log(sjis_array)
+        let sjis       = Encoding.codeToString( sjis_array );
+        console.log(sjis)
+
+        ECL.charset.Unicode.stringify( array ); //=> "あいうえお"
+      </script>
+    </div>
+  </body>
+</html>

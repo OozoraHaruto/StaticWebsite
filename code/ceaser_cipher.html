@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#87ceeb">
+    <title>太陽のシーザー暗号</title>
+    <link href="../css/plain.css" rel="stylesheet">
+    <script src="../script/pages.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #87ceeb;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">太陽のウエブ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul id="navbar-links" class="navbar-nav"></ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container p-3">
+      <div class="row">
+        <div class="col">
+          <div class="fs-1 my-3 text-center">太陽のシーザー暗号</div>
+        </div>
+      </div>
+
+      <div class="row" id="otouto_ni_no_chousen"></div>
+      <div class="row mb-3">
+        <textarea class="form-control" id="toketa_kotoba" rows="3" placeholder="解けたの言葉は？"></textarea>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary" onclick="foomu_wo_angou_ni_shite()">↓暗号↓</button>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary" onclick="foomu_wo_tokete()" id="tokeru_botan">↑解ける↑</button>
+        </div>
+        <div class="col-auto">
+          <input type="text" readonly class="form-control-plaintext" value="何文字をシフト？">
+        </div>
+        <div class="col-auto">
+          <input class="form-control" type="number" placeholder="入れて" id="nan_moji" value="4">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <textarea class="form-control" id="angou_kotoba" rows="3" placeholder="暗号は？"></textarea>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary" onclick="opushion_wo_dasu()">↓リスト↓</button>
+        </div>
+        <div class="col-auto">
+          <input type="text" readonly class="form-control-plaintext" value="何文字を見る？-1は全部">
+        </div>
+        <div class="col-auto">
+          <input class="form-control" type="number" placeholder="入れて" id="nan_moji_miru" value="5">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <ul class="list-group" id="opushion_risuto">
+            <li class="list-group-item">暗号を書いて、「↓リスト↓」ボタンを押してください。<br />それから解けたのを押すと、それで解けます。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const eibun = 				"abcdefghijklmnopqrstuvwxyz"
+    const eibun_ookino = 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const hiragana = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわん"
+    const katakana = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン"
+    const hiragana_dakuon = "がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ"
+    const katakana_dakuon = "ガギグゲゴザジズゼゾダジヅデドバビブベボパピプペポ"
+    const hiragana_konbo = ["きゃ","きゅ","きょ","ぎゃ","ぎゅ","ぎょ","しゃ","しゅ","しょ","じゃ","じゅ","じょ","ちゃ","ちゅ","ちょ","にゃ","にゅ","にょ","ひゃ","ひゅ","ひょ","びゃ","びゅ","びょ","ぴゃ","ぴゅ","ぴょ","みゃ","みゅ","みょ","りゃ","りゅ","りょ"]
+    const katakana_konbo = ["キャ","キュ","キョ","ギャ","ギュ","ギョ","シャ","シュ","ショ","ジャ","ジュ","ジョ","チャ","チュ","チョ","ニャ","ニュ","ニョ","ヒャ","ヒュ","ヒョ","ビャ","ビュ","ビョ","ピャ","ピュ","ピョ","ミャ","ミュ","ミョ","リャ","リュ","リョ"]
+    const hiragana_konbo_dakuon = ["ぎゃ","ぎゅ","ぎょ","じゃ","じゅ","じょ","びゃ","びゅ","びょ","ぴゃ","ぴゅ","ぴょ"]
+    const katakana_konbo_dakuon = ["ギャ","ギュ","ギョ","ジャ","ジュ","ジョ","ビャ","ビュ","ビョ","ピャ","ピュ","ピョ"]
+    const hiragana_youon = "ゃゅょ"
+    const katakana_youon = "ャュョ"
+    const youon = hiragana_youon + katakana_youon
+
+    const youon_desuka = moji =>{
+      return youon.indexOf(moji) != -1
+    }
+    const moji_wo = (moji, nan_moji, fukugou) => {
+      let data = null
+      if (moji.length == 2){ // 拗音です
+        if (hiragana_konbo.includes(moji)) data = hiragana_konbo
+        if (katakana_konbo.includes(moji)) data = katakana_konbo
+        if (hiragana_konbo_dakuon.includes(moji)) data = hiragana_konbo_dakuon
+        if (katakana_konbo_dakuon.includes(moji)) data = katakana_konbo_dakuon
+      } else {
+        if (eibun.indexOf(moji) != -1) data = eibun
+        if (eibun_ookino.indexOf(moji) != -1) data = eibun_ookino
+        if (hiragana.indexOf(moji) != -1) data = hiragana
+        if (katakana.indexOf(moji) != -1) data = katakana
+        if (hiragana_dakuon.indexOf(moji) != -1) data = hiragana_dakuon
+        if (katakana_dakuon.indexOf(moji) != -1) data = katakana_dakuon
+      }
+
+      if (!data) return moji
+
+      let nan_i = data.indexOf(moji)
+      nan_i += fukugou ? parseInt(-nan_moji) : parseInt(nan_moji)
+
+      if (nan_i > (data.length - 1)) nan_i -= data.length
+      else if (nan_i < 0) nan_i += data.length
+
+
+      if (data[nan_i] == undefined) {
+        console.log(data.indexOf(moji), nan_i)
+        console.log(moji, data[nan_i])
+        return "？"
+      }
+
+      return data[nan_i]
+    }
+
+    const kaitou = (angou, nan_moji, fukugou) =>{
+      let nani_kaita_no = ""
+      for (var i = 0; i < angou.length; i++) {
+        let moji_ichi = angou.charAt(i)
+        let moji_ni = angou.charAt(i+1)
+
+        if(youon_desuka(moji_ni)){
+          nani_kaita_no += moji_wo(moji_ichi + moji_ni, nan_moji, fukugou)
+          i++ //二文字から
+        }else{
+          nani_kaita_no += moji_wo(moji_ichi, nan_moji, fukugou)
+        }
+      }
+
+      /* console.log(nani_kaita_no) */
+      return nani_kaita_no
+    }
+
+    // フォーム用
+    const foomu_wo_angou_ni_shite = () =>{
+      let foomu_kotoba = document.getElementById("toketa_kotoba").value
+      let nan_moji = parseInt(document.getElementById("nan_moji").value)
+      let kotae = kaitou(foomu_kotoba, nan_moji, false);
+      document.getElementById("angou_kotoba").value = kotae;
+    }
+
+    const foomu_wo_tokete = () =>{
+      let foomu_kotoba = document.getElementById("angou_kotoba").value
+      let nan_moji = parseInt(document.getElementById("nan_moji").value)
+      let kotae = kaitou(foomu_kotoba, nan_moji, true);
+      document.getElementById("toketa_kotoba").value = kotae;
+    }
+
+    const opushion_wo_dasu = () =>{
+      let opushion_risuto = document.getElementById("opushion_risuto")
+
+      while( opushion_risuto.firstChild ){
+        opushion_risuto.removeChild( opushion_risuto.firstChild );
+      }
+
+      let foomu_kotoba = document.getElementById("angou_kotoba").value
+      let nan_moji_miru = parseInt(document.getElementById("nan_moji_miru").value)
+      let nan_moji = document.getElementById("nan_moji")
+      let kotoba_kitta = nan_moji_miru <= 0 ? foomu_kotoba : foomu_kotoba.substr(0, nan_moji_miru)
+      let tokeru_botan = document.getElementById("tokeru_botan")
+
+      for(let i = 1; i < hiragana.length; i++){
+        var li = document.createElement('li');
+        li.className = "list-group-item";
+        li.onclick = function () {
+          console.log(i)
+          nan_moji.value = i
+          tokeru_botan.click()
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        li.appendChild(document.createTextNode(i + ") " + kaitou(kotoba_kitta, i, true)));
+        opushion_risuto.appendChild(li);
+      }
+    }
+
+    // 他
+    const getRandomInt = max => Math.floor(Math.random() * max);
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      let nan_moji = document.getElementById("nan_moji")
+      nan_moji.value = getRandomInt(hiragana.length)
+
+      // 挑戦出します
+      let takusan_angou = [
+        "ひれのれをずねもへだも。ねりしぬねめるくも。sssヘシ。",
+        "ゆきひこへとらよなき。しひこひむぎそひむふてぬそふけぱれけけぱと。ゴエバキヒをくだぬすあ、ぎそひむふてふあ、にえをすきずさふけぱ。よくーこき。ぶけぎゃこぽぱと。",
+        "たみえりもははほけ、りたはせはほけ、そへざはほけ、そけどめちべぼたんひ。",
+        "せきにちっひか、ぎょれぬひか、みがばんさみにす。",
+        "んやるめ？れせンーポーぷモサヌをなくこやせぷ、ぷるこやこふ言っくれぼんやす。",
+        "ぬよためねビネサきめね！sssひれのれいみはぷふなねねもぺず。のに。だしほてろねしねねも。",
+        "みあまぼらふお、みはじかめだぢむちわ。いさろむ？どまぺかりいのやろもおらびれむ。めふろらきひ。"
+      ]
+      takusan_angou.map((angou, i) =>{
+        var button = document.createElement('button');
+        button.className = "btn btn-primary mb-3";
+        button.onclick = function () {
+          document.getElementById("angou_kotoba").value = angou
+        }
+        button.appendChild(document.createTextNode("メッセージ "+(i+1)));
+        var div = document.createElement('div')
+        div.className = "col-auto"
+        div.appendChild(button)
+        document.getElementById("otouto_ni_no_chousen").appendChild(div)
+      })
+    });
+  </script>
+</html>
