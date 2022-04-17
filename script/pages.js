@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       accordion.removeChild( accordion.firstChild );
     }
     let rowClass = "row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3"
-    categories.map(category =>{
+    categories.map((category, i) =>{
       let wrapper = document.createElement("div")
       wrapper.className = "accordion-item"
 
@@ -82,11 +82,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
       header.className = "accordion-header"
       header.id = headingID
       let headerButton = document.createElement("button")
-      headerButton.className = "accordion-button collapsed"
+      headerButton.className = `accordion-button${(i === 0) ? "" : " collapsed"}`
       headerButton.type = "button"
       headerButton.setAttribute("data-bs-toggle", "collapse")
       headerButton.setAttribute("data-bs-target", `#${collapseID}`)
-      headerButton.setAttribute("aria-expanded", "false")
+      headerButton.setAttribute("aria-expanded", `${(i === 0) ? "true" : "false"}`)
       headerButton.setAttribute("aria-controls", collapseID)
       headerButton.innerText = category.name
       header.appendChild(headerButton)
@@ -94,7 +94,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
       let collapse = document.createElement("div")
       collapse.id = collapseID
-      collapse.className = "accordion-collapse collapse"
+      collapse.className = `accordion-collapse collapse${(i === 0) ? " show" : ""}`
       collapse.setAttribute("aria-labelledby", headingID)
       collapse.setAttribute("data-bs-parent", `#${accordionID}`)
       let collapseBody = document.createElement("div")
