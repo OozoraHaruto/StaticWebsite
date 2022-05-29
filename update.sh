@@ -1,3 +1,4 @@
+#! /bin/bash
 cd css
 
 STUDIO_LOC="/Volumes/航成大好き/"
@@ -11,8 +12,6 @@ if [ -d $STUDIO_LOC ]; then
   STUDIO=true
   cd $STUDIO_LOC
 fi
-
-echo $STUDIO
 
 # update or clone bootstrap git
 if [ ! -d "bootstrap" ]; then
@@ -34,11 +33,10 @@ if $STUDIO; then
     mkdir $needDir
   fi
 
-  echo $needDir
   cp -r ./scss "${pwd}/bootstrap"
 fi
 
 
+# Generate css file
 cd $pwd
-ls
 sass plain.scss plain.css
