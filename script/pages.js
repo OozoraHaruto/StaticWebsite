@@ -16,10 +16,12 @@ const categories = [
     "en_name": "Apps",
     pages: [
       {name:"買い物リスト", image:"grocery.png", links: [
-        {name:"インストール", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/manifest.plist"},
+        {name:"インストール（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/manifest.plist"},
+        {name:"ダウンロード（.zip）", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.app.zip"},
+        "hr",
+        {name:"ipa", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.ipa"},
         {name:"イメージ（５７）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img57.png"},
         {name:"イメージ（５１２）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img512.png"},
-        {name:"IPA", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.ipa"},
       ]}
     ]
   },
@@ -127,11 +129,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
           let list = document.createElement("div")
           list.className = "d-grid gap-2 p-2"
           page.links.map(link => {
-            let button = document.createElement("a")
-            button.className = `btn btn-outline-${link.className ? link.className : "primary"}`
-            button.href = link.url
-            button.innerText = link.name
-            list.appendChild(button)
+            if (typeof link === 'string' || link instanceof String) {
+              if (link === 'hr') {
+                list.appendChild(document.createElement('hr'))
+              }
+            } else {
+              let button = document.createElement("a")
+              button.className = `btn btn-outline-${link.className ? link.className : "primary"}`
+              button.href = link.url
+              button.innerText = link.name
+              list.appendChild(button)
+            }
           })
           card.appendChild(list)
         }
