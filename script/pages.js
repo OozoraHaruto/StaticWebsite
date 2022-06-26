@@ -19,6 +19,8 @@ const categories = [
         {name:"インストール（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/manifest.plist"},
         {name:"ダウンロード（.zip）", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.app.zip"},
         "hr",
+        {name:"インストール　ベータ（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery-beta/manifest.plist"},
+        "hr",
         {name:"ipa", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.ipa"},
         {name:"イメージ（５７）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img57.png"},
         {name:"イメージ（５１２）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img512.png"},
