@@ -25,11 +25,11 @@ const categories = [
         {name:"イメージ（５７）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img57.png"},
         {name:"イメージ（５１２）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/img512.png"},
       ]},
-      {name:"ホームオート", image:"grocery.png", links: [
+      {name:"ホームオート", image:"home-auto.png", links: [
         {name:"インストール（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/home-auto/manifest.plist"},
         "hr",
         {name:"ipa", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/home-auto/home-auto.ipa"},
-        {name:"イメージ（５７）", className: "info", url:"hhttps://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/home-auto/img57.png"},
+        {name:"イメージ（５７）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/home-auto/img57.png"},
         {name:"イメージ（５１２）", className: "info", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/home-auto/img512.png"},
       ]},
     ]
