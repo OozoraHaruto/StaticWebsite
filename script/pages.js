@@ -17,7 +17,7 @@ const categories = [
     pages: [
       {name:"買い物リスト", image:"grocery.png", links: [
         {name:"インストール（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/manifest.plist"},
-        {name:"ダウンロード（.zip）", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.app.zip"},
+        {name:"ダウンロード（.zip）", url:"https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery/Grocery%20and%20Me.app.zip", protected: true},
         "hr",
         {name:"インストール　ベータ（.ipa）", url:"itms-services://?action=download-manifest&url=https://filedn.com/lfPI0afT4n77a6XArmsDWtS/app/grocery-beta/manifest.plist"},
         "hr",
@@ -37,8 +37,62 @@ const categories = [
 ]
 const navbarID = "navbar-links";
 const accordionID = "accordionMenu";
+const passwordModalID = "passwordModal"
+let passwordModalOpened = false
+let downloadingURL = ""
+let passwordModal = null
+
+const downloadFile = (url = "") => {
+  if (url != "") {
+    downloadingURL = url
+  } else {
+    url = downloadingURL
+  }
+  if (!passwordModal) {
+    passwordModal = new bootstrap.Modal(document.getElementById(passwordModalID), {})
+  }
+
+  if (!passwordModalOpened) { // show modal since it is not shown
+    passwordModal.show()
+    return
+  } else { // process password
+    let enteredPassword = document.getElementById("password")
+    let encryptedPassword = CryptoJS.SHA3(CryptoJS.MD5(enteredPassword.value))
+    enteredPassword.value = ""
+    if (encryptedPassword != password) {
+      alert("パスワードは違う")
+      enteredPassword.focus()
+      return
+    }
+    // close modal
+    passwordModal.hide()
+  }
+
+  var link = document.createElement("a");
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  delete link;
+
+  downloadingURL = ""
+}
+
+
 
 window.addEventListener('DOMContentLoaded', (event) => {
+  const passwordModal = document.getElementById(passwordModalID)
+  if (passwordModal) {
+    // add event listener
+    document.getElementById(passwordModalID).addEventListener('shown.bs.modal', event => {
+      passwordModalOpened = true
+    })
+    document.getElementById(passwordModalID).addEventListener('hidden.bs.modal', event => {
+      passwordModalOpened = false
+    })
+  }
+
+  // Create page
   let navbar = document.getElementById(navbarID);
   if (navbar) {
     while( navbar.firstChild ){
@@ -143,9 +197,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 list.appendChild(document.createElement('hr'))
               }
             } else {
-              let button = document.createElement("a")
+              let button
+              if (link.protected) {
+                button = document.createElement("button")
+                button.onclick = () => downloadFile(link.url)
+              } else {
+                button = document.createElement("a")
+                button.href = link.url
+              }
               button.className = `btn btn-outline-${link.className ? link.className : "primary"}`
-              button.href = link.url
               button.innerText = link.name
               list.appendChild(button)
             }

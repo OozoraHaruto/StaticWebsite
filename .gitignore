@@ -2,3 +2,4 @@
 admin/
 pihole/
 css/bootstrap
+secrets/*
