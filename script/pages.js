@@ -185,27 +185,3 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
   }
 });
-
-/*
-<div class="accordion-item">
-  <h2 class="accordion-header" id="headingGame">
-    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGame" aria-expanded="false" aria-controls="collapseGame">
-      ゲーム
-    </button>
-  </h2>
-  <div id="collapseGame" class="accordion-collapse collapse" aria-labelledby="headingGame" data-bs-parent="#accordionMenu">
-    <div class="accordion-body">
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4">
-          <a class="card text-decoration-none" href="games/Doraemon Story of Seasons.html">
-            <img src="images/games/Doraemon Story of Seasons.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-body text-decoration-none">Doraemon Story of Seasons</h5>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-*/
