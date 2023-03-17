@@ -1,7 +1,7 @@
 #! /bin/bash
 cd css
 
-STUDIO_LOC="/Volumes/航成大好き/"
+STUDIO_LOC="/Volumes/こうせい大好き/"
 STUDIO=false
 pwd=$(pwd)
 
